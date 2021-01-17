@@ -11,6 +11,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ROLLBAR_TOKEN: ${{ secrets.ROLLBAR_TOKEN }}
     steps:
     - uses: actions/checkout@v1
 
