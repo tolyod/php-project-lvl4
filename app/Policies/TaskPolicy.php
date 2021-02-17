@@ -16,7 +16,7 @@ class TaskPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function viewAny(?User $user) : bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
@@ -28,7 +28,7 @@ class TaskPolicy
      * @param  \App\Models\Task  $task
      * @return mixed
      */
-    public function view(?User $user) : bool
+    public function view(?User $user): bool
     {
         return true;
     }
