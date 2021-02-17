@@ -7,7 +7,7 @@
                 <a class="btn btn-primary" href="{{ route('task_statuses.create') }}">@lang('layout.common.buttons.create')</a>
             </p>
         @endauth
-        <div class="row justify-content-center">
+        <main class="row justify-content-center">
             <table class="table">
                 <thead>
                 <tr>
@@ -41,6 +41,6 @@
                 @endforeach
                 </tbody>
             </table>
-        </div>
+        </main>
     </div>
 @endsection
