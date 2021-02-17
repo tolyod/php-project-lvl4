@@ -7,19 +7,6 @@ use Tests\TestCase;
 
 class TaskStatusTest extends TestCase
 {
-    /* use RefreshDatabase; */
-    /* use WithFaker; */
-
-    /* private User $user; */
-
-    /* public function setUp(): void */
-    /* { */
-    /*     parent::setUp(); */
-
-    /*     $this->seed(TaskStatusSeeder::class); */
-    /*     $this->user = User::factory()->make(); */
-    /* } */
-
     public function testIndex()
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
