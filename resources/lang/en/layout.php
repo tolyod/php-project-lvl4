@@ -2,8 +2,9 @@
 
 return [
     'task_statuses' => 'Task Statuses',
-    'empty_statuses' => 'Need to feel status',
+    'empty_statuses' => 'Task Statuses table is empty',
     'tasks' => 'Tasks',
+    'labels' => 'Labels',
     'id' => 'ID',
     'name' => 'Name',
     'task_status' => 'Status',
@@ -28,7 +29,9 @@ return [
             'task_status_create' => 'Create status',
             'task_status_update' => 'Update status',
             'task_create' => 'Create Task',
-            'task_update' => 'Update Task'
+            'task_update' => 'Update Task',
+            'label_create' => 'Create Label',
+            'label_update' => 'Update Label'
         ],
         'label' => [
             'name' => 'Name',

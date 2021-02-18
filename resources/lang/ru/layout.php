@@ -4,6 +4,7 @@ return [
     'task_statuses' => 'Статусы',
     'empty_statuses' => 'Таблица статусов пуста',
     'tasks' => 'Задачи',
+    'labels' => 'Метки',
     'id' => 'ID',
     'name' => 'Имя',
     'task_status' => 'Статус',
@@ -27,7 +28,9 @@ return [
             'task_status_create' => 'Создать статус',
             'task_status_update' => 'Изменение статуса',
             'task_create' => 'Создать Задачу',
-            'task_update' => 'Изменение Задачу'
+            'task_update' => 'Изменение Задачи',
+            'label_create' => 'Создать Метку',
+            'label_update' => 'Изменение Метки'
         ],
         'label' => [
             'name' => 'Имя',
