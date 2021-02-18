@@ -19,6 +19,10 @@
             {!! Form::label('status_id', __('layout.task_status')) !!}
             {!! Form::select('status_id', $taskStatuses, null, ['class' => 'form-control', 'placeholder' => __('layout.selected_default')]) !!}
         </div>
+        <div class="form-group">
+            {!! Form::label('labels', __('layout.labels')) !!}
+            {!! Form::select('labels[]', $labels, null, ['class' => 'form-control', 'multiple' => true, 'placeholder' => '']) !!}
+        </div>
         {!! Form::token() !!}
         {!! Form::submit(__('layout.common.buttons.create'), ['class' => 'btn btn-primary']) !!}
         {!! Form::close() !!}

@@ -6,6 +6,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\Label;
 
 class TaskController extends Controller
 {
@@ -57,7 +58,12 @@ class TaskController extends Controller
                 $user->id => $user->name
             ]);
 
-        $view = view('task.create', compact('task', 'taskStatuses', 'users'));
+        $labels = Label::all()
+            ->mapWithKeys(fn(Label $label) => [
+                $label->id => $label->name
+            ]);
+
+        $view = view('task.create', compact('task', 'taskStatuses', 'users', 'labels'));
 
         if ($taskStatuses->isEmpty()) {
             return $view->withErrors([
@@ -93,6 +99,7 @@ class TaskController extends Controller
         $task->assignee()->associate($request->input('assigned_to_id'));
 
         $task->saveOrFail();
+        $task->labels()->attach($request->input('labels'));
 
         flash()->success(__('layout.flash.success'));
 
@@ -118,6 +125,11 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        $labels = Label::all()
+            ->mapWithKeys(fn(Label $label) => [
+                $label->id => $label->name
+            ]);
+
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn(TaskStatus $taskStatus) => [
                 $taskStatus->id => $taskStatus->name
@@ -127,7 +139,7 @@ class TaskController extends Controller
                 $user->id => $user->name
             ]);
 
-        return view('task.edit', compact('task', 'taskStatuses', 'users'));
+        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
     /**
@@ -153,6 +165,7 @@ class TaskController extends Controller
         $task->assignee()->associate($request->input('assigned_to_id'));
 
         $task->saveOrFail();
+        $task->labels()->sync($request->input('labels'));
 
         flash()->success(__('layout.flash.success'));
 
