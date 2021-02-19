@@ -13,7 +13,7 @@ return [
     'task' => [
         'creator' => 'Автор',
         'assignee' => 'Исполнитель',
-        'show_task' => 'Просмотрт задачи'
+        'show_task' => 'Просмотр задачи'
     ],
     'common' => [
         'confirm_destroy' => 'Вы уверенны что хотите удалить обьект?',
@@ -22,7 +22,8 @@ return [
             'edit' => 'Изменить',
             'destroy' => 'Удалить',
             'submit' => 'Подтвердить',
-            'update' => 'Обновить'
+            'update' => 'Обновить',
+            'apply' => 'Применить'
         ],
         'headers' => [
             'task_status_create' => 'Создать статус',

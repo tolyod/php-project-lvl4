@@ -7,7 +7,18 @@
                 <a class="btn btn-primary" href="{{ route('tasks.create') }}">@lang('layout.common.buttons.create')</a>
             </p>
         @endauth
-        <main class="row justify-content-center">
+{{--        @php--}}
+            {{--dump($taskStatuses, $creators, $assigns);--}}
+        {{--@endphp--}}
+        <div class="ml-auto">
+            {!! Form::open(['route' => 'tasks.index', 'method' => 'GET', 'class' => 'form-inline']) !!}
+                {!! Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'form-control mr-2']) !!}
+                {!! Form::select('filter[created_by_id]', $creators, null, ['class' => 'form-control mr-2']) !!}
+                {!! Form::select('filter[assigned_to_id]', $assigns, null, ['class' => 'form-control mr-2']) !!}
+                {!! Form::submit(__('layout.common.buttons.apply'), ['class' => 'btn btn-outline-primary mr-2']) !!}
+            {!! Form::close() !!}
+        </div>
+        <div class="row justify-content-center">
             <table class="table">
                 <thead>
                 <tr>
@@ -49,6 +60,6 @@
                 @endforeach
                 </tbody>
             </table>
-        </main>
+        </div>
     </div>
 @endsection

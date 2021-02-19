@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\Label;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
@@ -21,21 +23,27 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-
+        $tasks = QueryBuilder::for(Task::class)
+            ->with('creator', 'status', 'assignee', 'status', 'labels')
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id')
+            ])
+            ->get();
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn(TaskStatus $taskStatus) => [
                 $taskStatus->id => $taskStatus->name
             ])
-            ->prepend(__('layout.task.form.choose_status'), '');
+            ->prepend(__('layout.task_status'), '');
 
         $users = User::all()
             ->mapWithKeys(fn(User $user) => [
                 $user->id => $user->name
             ]);
 
-        $creators = $users->prepend(__('layout.task.creator'), '');
-        $assigns = $users->prepend(__('layout.task.assignee'), '');
+        $creators = collect($users->all())->prepend(__('layout.task.creator'), '');
+        $assigns = collect($users->all())->prepend(__('layout.task.assignee'), '');
 
         return view('task.index', compact('tasks', 'taskStatuses', 'users', 'creators', 'assigns'));
     }

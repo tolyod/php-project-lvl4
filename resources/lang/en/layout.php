@@ -23,7 +23,8 @@ return [
             'edit' => 'Edit',
             'destroy' => 'Destroy',
             'submit' => 'Submit',
-            'update' => 'Update'
+            'update' => 'Update',
+            'apply' => 'Apply'
         ],
         'headers' => [
             'task_status_create' => 'Create status',
