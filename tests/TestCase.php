@@ -14,12 +14,12 @@ abstract class TestCase extends BaseTestCase
     use RefreshDatabase;
 
     protected User $user;
+    protected $seed = true;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->seed();
         $this->user = User::factory()->create();
     }
 }
