@@ -10,11 +10,13 @@ class TaskStatusTest extends TestCase
     public function testIndex(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
+        /* @phpstan-ignore-next-line */
+        $taskStatusName = $taskStatus->name;
         $indexUrl = route('task_statuses.index');
         $response = $this->get($indexUrl);
         $response
             ->assertOk()
-            ->assertSee($taskStatus->name);
+            ->assertSee($taskStatusName);
     }
 
     public function testStore(): void
@@ -80,6 +82,8 @@ class TaskStatusTest extends TestCase
     public function testEdit(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
+        /* @phpstan-ignore-next-line */
+        $taskStatusName = $taskStatus->name;
         $editUrl = route('task_statuses.edit', $taskStatus);
 
         $this->actingAs($this->user);
@@ -87,7 +91,7 @@ class TaskStatusTest extends TestCase
         $response = $this->get($editUrl);
         $response
             ->assertOk()
-            ->assertSee($taskStatus->name);
+            ->assertSee($taskStatusName);
     }
 
     public function testEditByGuest(): void
@@ -113,6 +117,7 @@ class TaskStatusTest extends TestCase
         $response = $this->delete($deleteUrl);
         $response->assertRedirect($indexUrl);
 
+        /* @phpstan-ignore-next-line */
         $this->assertDeleted($taskStatus);
     }
 
@@ -126,6 +131,7 @@ class TaskStatusTest extends TestCase
         $response = $this->delete($deleteUrl);
         $response->assertRedirect($loginUrl);
 
+        /* @phpstan-ignore-next-line */
         $this->assertDatabaseHas('task_statuses', $taskStatus->only('id', 'name'));
     }
 }

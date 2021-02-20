@@ -10,11 +10,13 @@ class LabelTest extends TestCase
     public function testIndex(): void
     {
         $label = Label::inRandomOrder()->first();
+        /* @phpstan-ignore-next-line */
+        $labelName = $label->name;
         $indexUrl = route('labels.index');
         $response = $this->get($indexUrl);
         $response
             ->assertOk()
-            ->assertSee($label->name);
+            ->assertSee($labelName);
     }
 
     public function testCreate(): void
@@ -86,6 +88,8 @@ class LabelTest extends TestCase
     public function testEdit(): void
     {
         $label = Label::inRandomOrder()->first();
+        /* @phpstan-ignore-next-line */
+        $labelName = $label->name;
         $editUrl = route('labels.edit', $label);
 
         $this->actingAs($this->user);
@@ -93,7 +97,7 @@ class LabelTest extends TestCase
         $response = $this->get($editUrl);
         $response
             ->assertOk()
-            ->assertSee($label->name);
+            ->assertSee($labelName);
     }
 
     public function testDelete(): void
@@ -108,6 +112,7 @@ class LabelTest extends TestCase
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
+        /* @phpstan-ignore-next-line */
         $this->assertDeleted($label);
     }
 }

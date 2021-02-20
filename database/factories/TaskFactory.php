@@ -26,8 +26,11 @@ class TaskFactory extends Factory
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->sentences(3, true),
+            /* @phpstan-ignore-next-line */
             'status_id' => TaskStatus::first()->id,
+            /* @phpstan-ignore-next-line */
             'created_by_id' => User::inRandomOrder()->first()->id,
+            /* @phpstan-ignore-next-line */
             'assigned_to_id' => User::inRandomOrder()->first()->id
         ];
     }

@@ -10,60 +10,27 @@ class TaskPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
     public function viewAny(?User $user): bool
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
-     * @return mixed
-     */
     public function view(?User $user): bool
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function create()
+    public function create(): void
     {
         Auth:check();
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
-     * @return mixed
-     */
-    public function update(User $user, Task $task)
+    public function update(User $user, Task $task): void
     {
         Auth:check();
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
-     * @return mixed
-     */
-    public function delete(User $user, Task $task)
+    public function delete(User $user, Task $task): bool
     {
         return $user->isCreator($task);
     }
