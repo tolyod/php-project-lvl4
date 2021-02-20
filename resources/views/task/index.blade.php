@@ -1,26 +1,23 @@
 @extends('layouts.app')
 @section('content')
         <h1 class="mb-5">@lang('layout.tasks')</h1>
-        @auth
-            <p>
-                <a class="btn btn-primary" href="{{ route('tasks.create') }}">@lang('layout.common.buttons.create')</a>
-            </p>
-        @endauth
-{{--        @php--}}
-            {{--dump($taskStatuses, $creators, $assigns);--}}
-        {{--@endphp--}}
-        <div class="ml-auto">
+        <div class="d-flex">
+            <div>
             {!! Form::open(['route' => 'tasks.index', 'method' => 'GET', 'class' => 'form-inline']) !!}
-                {!! Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'form-control mr-2']) !!}
-                {!! Form::select('filter[created_by_id]', $creators, null, ['class' => 'form-control mr-2']) !!}
-                {!! Form::select('filter[assigned_to_id]', $assigns, null, ['class' => 'form-control mr-2']) !!}
-                {!! Form::submit(__('layout.common.buttons.apply'), ['class' => 'btn btn-outline-primary mr-2']) !!}
+            {!! Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'form-control mr-2']) !!}
+            {!! Form::select('filter[created_by_id]', $creators, null, ['class' => 'form-control mr-2']) !!}
+            {!! Form::select('filter[assigned_to_id]', $assigns, null, ['class' => 'form-control mr-2']) !!}
+            {!! Form::submit(__('layout.common.buttons.apply'), ['class' => 'btn btn-outline-primary mr-2']) !!}
             {!! Form::close() !!}
+            </div>
+            @auth
+                <a href="{{ route('tasks.create') }}" class="btn btn-primary ml-auto">@lang('layout.common.buttons.task_create')</a>
+            @endauth
         </div>
-            <table class="table">
+            <table class="table mt-2">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">@lang('layout.id')</th>
                     <th scope="col">@lang('layout.task_status')</th>
                     <th scope="col">@lang('layout.name')</th>
                     <th scope="col">@lang('layout.task.creator')</th>

@@ -14,6 +14,7 @@ return [
     'task_status' => 'Статус',
     'created_at' => 'Дата создания',
     'actions' => 'Действия',
+    'id' => 'ID',
     'task' => [
         'creator' => 'Автор',
         'assignee' => 'Исполнитель',
@@ -27,7 +28,10 @@ return [
             'destroy' => 'Удалить',
             'submit' => 'Подтвердить',
             'update' => 'Обновить',
-            'apply' => 'Применить'
+            'apply' => 'Применить',
+            'label_create' => 'Создать метку',
+            'task_create' => 'Создать задачу',
+            'status_create' => 'Создать статус'
         ],
         'headers' => [
             'task_status_create' => 'Создать статус',

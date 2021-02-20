@@ -2,11 +2,9 @@
 @section('content')
         <h1 class="mb-5">@lang('layout.task_statuses')</h1>
         @auth
-            <p>
-                <a class="btn btn-primary" href="{{ route('task_statuses.create') }}">@lang('layout.common.buttons.create')</a>
-            </p>
+            <a class="btn btn-primary" href="{{ route('task_statuses.create') }}">@lang('layout.common.buttons.status_create')</a>
         @endauth
-            <table class="table">
+            <table class="table mt-2">
                 <thead>
                 <tr>
                     <th scope="col">@lang('layout.id')</th>

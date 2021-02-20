@@ -2,14 +2,12 @@
 @section('content')
         <h1 class="mb-5">@lang('layout.labels')</h1>
         @auth
-        <p>
-            <a class="btn btn-primary" href="{{ route('labels.create') }}">@lang('layout.common.buttons.create')</a>
-        </p>
+            <a class="btn btn-primary" href="{{ route('labels.create') }}">@lang('layout.common.buttons.label_create')</a>
         @endauth
-            <table class="table">
+            <table class="table mt-2">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">@lang('layout.id')</th>
                     <th scope="col">@lang('layout.name')</th>
                     <th scope="col">@lang('layout.common.label.description')</th>
                     <th scope="col">@lang('layout.created_at')</th>
