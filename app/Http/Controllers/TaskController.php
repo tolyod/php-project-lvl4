@@ -175,7 +175,7 @@ class TaskController extends Controller
         $task->saveOrFail();
         $task->labels()->sync($request->input('labels'));
 
-        flash()->success(__('layout.flash.success'));
+        flash()->success(__('flash.task_modify_success'));
 
         return redirect()->route('tasks.show', $task);
     }
@@ -191,7 +191,7 @@ class TaskController extends Controller
     {
         if ($request->user()->can('delete', $task)) {
             $task->delete();
-            flash()->success(__('layout.flash.success'));
+            flash()->success(__('flash.task_delete_success'));
 
             return redirect()->route('tasks.index');
         }

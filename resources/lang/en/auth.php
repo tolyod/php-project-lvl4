@@ -22,6 +22,7 @@ return [
     'email' => 'E-Mail Address',
     'password' => 'Password',
     'rememberme' => 'Remember Me',
-    'recoverpass' => 'Forgot Your Password?'
+    'recoverpass' => 'Forgot Your Password?',
+    'register' => 'Register'
 
 ];

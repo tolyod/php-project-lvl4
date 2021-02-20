@@ -2,6 +2,7 @@
 
 return [
     'task_statuses' => 'Task Statuses',
+    'app_name' => 'Task Manager',
     'empty_statuses' => 'Task Statuses table is empty',
     'tasks' => 'Tasks',
     'labels' => 'Labels',

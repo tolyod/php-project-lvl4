@@ -2,7 +2,11 @@
 
 return [
     'task_statuses' => 'Статусы',
+    'app_name' => 'Менеджер задач',
     'empty_statuses' => 'Таблица статусов пуста',
+    'hellow_message' => 'Привет от Хекслета!',
+    'practicle_courses' => 'Практические курсы по программированию',
+    'read_more' => 'Узнать больше',
     'tasks' => 'Задачи',
     'labels' => 'Метки',
     'id' => 'ID',

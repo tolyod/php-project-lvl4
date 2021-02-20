@@ -75,7 +75,7 @@ class TaskStatusController extends Controller
         $this->validate($request, ['name' => 'required']);
         $taskStatus->name = $request->input('name');
         $taskStatus->saveOrFail();
-        flash()->success(__('flash.success'));
+        flash()->success(__('flash.status_modify_success'));
 
         return redirect()->route('task_statuses.index');
     }
@@ -89,7 +89,7 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus)
     {
         $taskStatus->delete();
-        flash()->success(__('flash.success'));
+        flash()->success(__('flash.status_delete_success'));
 
         return back();
     }
