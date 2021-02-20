@@ -6,4 +6,12 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/7f5fc7479c0be183961f/maintainability)](https://codeclimate.com/github/tolyod/php-project-lvl4/maintainability)
 ![Master workflow](https://github.com/tolyod/php-project-lvl4/workflows/Master%20workflow/badge.svg)
 
-[web app heroku url](https://task-manager-apoloz.herokuapp.com/)
+[demo@heroku](https://task-manager-apoloz.herokuapp.com/)
+
+## Install
+clone repo and call
+
+`$ make setup`
+
+## Start at localhost
+`$ make serve`
