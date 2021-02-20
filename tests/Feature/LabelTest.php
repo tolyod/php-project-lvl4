@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class LabelTest extends TestCase
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $label = Label::inRandomOrder()->first();
         $indexUrl = route('labels.index');
@@ -17,7 +17,7 @@ class LabelTest extends TestCase
             ->assertSee($label->name);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $label = Label::inRandomOrder()->first();
         $createUrl = route('labels.create', $label);
@@ -28,7 +28,7 @@ class LabelTest extends TestCase
         $response->assertOk();
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $indexUrl = route('labels.index');
         $storeUrl = route('labels.store');
@@ -58,7 +58,7 @@ class LabelTest extends TestCase
         );
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $label = Label::inRandomOrder()->first();
         $indexUrl = route('labels.index');
@@ -83,7 +83,7 @@ class LabelTest extends TestCase
         $this->assertDatabaseHas('labels', ['name' => $name]);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $label = Label::inRandomOrder()->first();
         $editUrl = route('labels.edit', $label);
@@ -96,7 +96,7 @@ class LabelTest extends TestCase
             ->assertSee($label->name);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $label = Label::inRandomOrder()->first();
         $deleteUrl = route('labels.destroy', $label);

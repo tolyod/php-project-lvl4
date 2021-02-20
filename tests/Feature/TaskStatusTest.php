@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class TaskStatusTest extends TestCase
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $indexUrl = route('task_statuses.index');
@@ -17,7 +17,7 @@ class TaskStatusTest extends TestCase
             ->assertSee($taskStatus->name);
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $indexUrl = route('task_statuses.index');
         $storeUrl = route('task_statuses.store');
@@ -32,7 +32,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseHas('task_statuses', ['name' => $name]);
     }
 
-    public function testStoreByGuest()
+    public function testStoreByGuest(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $storeUrl = route('task_statuses.store', $taskStatus);
@@ -46,7 +46,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseMissing('task_statuses', ['name' => $name]);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $indexUrl = route('task_statuses.index');
@@ -63,7 +63,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseHas('task_statuses', ['name' => $name]);
     }
 
-    public function testUpdateByGuest()
+    public function testUpdateByGuest(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $updateUrl = route('task_statuses.update', $taskStatus);
@@ -77,7 +77,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseMissing('task_statuses', ['name' => $name]);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $editUrl = route('task_statuses.edit', $taskStatus);
@@ -90,7 +90,7 @@ class TaskStatusTest extends TestCase
             ->assertSee($taskStatus->name);
     }
 
-    public function testEditByGuest()
+    public function testEditByGuest(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $editUrl = route('task_statuses.edit', $taskStatus);
@@ -102,7 +102,7 @@ class TaskStatusTest extends TestCase
         $response->assertRedirect($loginUrl);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $deleteUrl = route('task_statuses.destroy', $taskStatus);
@@ -116,7 +116,7 @@ class TaskStatusTest extends TestCase
         $this->assertDeleted($taskStatus);
     }
 
-    public function testDeleteByGuest()
+    public function testDeleteByGuest(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $deleteUrl = route('task_statuses.destroy', $taskStatus);

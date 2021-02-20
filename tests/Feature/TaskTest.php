@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $task = Task::inRandomOrder()->first();
         $indexUrl = route('tasks.index');
@@ -19,7 +19,7 @@ class TaskTest extends TestCase
             ->assertSee($task->name);
     }
 
-    public function testShow()
+    public function testShow(): void
     {
         $task = Task::inRandomOrder()->first();
         $showUrl = route('tasks.show', $task);
@@ -29,7 +29,7 @@ class TaskTest extends TestCase
             ->assertSee($task->name);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $task = Task::inRandomOrder()->first();
         $createUrl = route('tasks.create', $task);
@@ -40,7 +40,7 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $storeUrl = route('tasks.store');
@@ -61,7 +61,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', array_merge($data, ['created_by_id' => $this->user->id]));
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $task = Task::inRandomOrder()->first();
         $taskStatus = TaskStatus::inRandomOrder()->first();
@@ -87,7 +87,7 @@ class TaskTest extends TestCase
         ], $data));
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $task = Task::inRandomOrder()->first();
         $editUrl = route('tasks.edit', $task);
@@ -100,7 +100,7 @@ class TaskTest extends TestCase
             ->assertSee($task->name);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $task = Task::inRandomOrder()->first();
         $deleteUrl = route('tasks.destroy', $task);
@@ -115,7 +115,7 @@ class TaskTest extends TestCase
         $this->assertDeleted($task);
     }
 
-    public function testDeleteByNotOwner()
+    public function testDeleteByNotOwner(): void
     {
         $task = Task::inRandomOrder()->first();
         $deleteUrl = route('tasks.destroy', $task);

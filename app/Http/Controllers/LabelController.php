@@ -14,7 +14,7 @@ class LabelController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index()
     {
@@ -26,7 +26,7 @@ class LabelController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function create()
     {
@@ -39,7 +39,7 @@ class LabelController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -51,7 +51,7 @@ class LabelController extends Controller
         $label->name = $request->input('name');
         $label->description = $request->input('description');
         $label->saveOrFail();
-        flash()->success(__('flash.label_create_success'));
+        flash()->success((string)__('flash.label_create_success'));
 
         return redirect()->route('labels.index');
     }
@@ -60,7 +60,7 @@ class LabelController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Label  $label
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function edit(Label $label)
     {
@@ -72,7 +72,7 @@ class LabelController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Label  $label
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Label $label)
     {
@@ -92,7 +92,7 @@ class LabelController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Label  $label
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function destroy(Label $label)
     {

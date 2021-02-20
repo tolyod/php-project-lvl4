@@ -14,7 +14,7 @@ abstract class TestCase extends BaseTestCase
     use RefreshDatabase;
 
     protected User $user;
-    protected $seed = true;
+    protected bool $seed = true;
 
     public function setUp(): void
     {
