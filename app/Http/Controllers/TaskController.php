@@ -108,7 +108,7 @@ class TaskController extends Controller
 
         $task->saveOrFail();
         $task->labels()->attach($request->input('labels'));
-
+        /* @phpstan-ignore-next-line */
         flash()->success(__('flash.task_create_success'));
 
         return redirect()->route('tasks.index');
@@ -174,7 +174,7 @@ class TaskController extends Controller
 
         $task->saveOrFail();
         $task->labels()->sync($request->input('labels'));
-
+        /* @phpstan-ignore-next-line */
         flash()->success(__('flash.task_modify_success'));
 
         return redirect()->route('tasks.index');
@@ -185,16 +185,20 @@ class TaskController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|void
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function destroy(Request $request, Task $task)
     {
         if ($request->user()->can('delete', $task)) {
             $task->delete();
+            /* @phpstan-ignore-next-line */
             flash()->success(__('flash.task_delete_success'));
 
             return redirect()->route('tasks.index');
         }
-        abort('403');
+        abort(403);
     }
 }

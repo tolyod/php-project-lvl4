@@ -9,7 +9,6 @@ return [
     'read_more' => 'Узнать больше',
     'tasks' => 'Задачи',
     'labels' => 'Метки',
-    'id' => 'ID',
     'name' => 'Имя',
     'task_status' => 'Статус',
     'created_at' => 'Дата создания',
