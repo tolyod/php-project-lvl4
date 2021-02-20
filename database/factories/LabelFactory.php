@@ -23,6 +23,7 @@ class LabelFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
+            'description' => $this->faker->realText(60, 2)
         ];
     }
 }

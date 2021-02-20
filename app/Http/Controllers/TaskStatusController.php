@@ -48,7 +48,7 @@ class TaskStatusController extends Controller
 
         $taskStatus->name = $request->input('name');
         $taskStatus->saveOrFail();
-        flash()->success(__('flash.success'));
+        flash()->success(__('flash.status_create_success'));
         return redirect()->route('task_statuses.index');
     }
 

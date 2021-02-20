@@ -109,7 +109,7 @@ class TaskController extends Controller
         $task->saveOrFail();
         $task->labels()->attach($request->input('labels'));
 
-        flash()->success(__('layout.flash.success'));
+        flash()->success(__('flash.task_create_success'));
 
         return redirect()->route('tasks.show', $task);
     }

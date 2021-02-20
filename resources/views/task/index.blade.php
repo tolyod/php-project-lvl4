@@ -43,10 +43,9 @@
                         </td>
                         <td>{{ $task->creator->name }}</td>
                         <td>{{ optional($task->assignee)->name }}</td>
-                        <td>{{ $task->created_at }}</td>
+                        <td>{{ $task->created_at->format('d.m.Y') }}</td>
                         <td>
                         @auth
-                            <a href="{{ route('tasks.edit', $task) }}">@lang('layout.common.buttons.edit')</a>
                             @can('delete', $task)
                             <a href="{{ route('tasks.destroy', $task) }}" class="text-danger"
                                data-confirm="@lang('layout.common.confirm_destroy')" data-method="delete"
@@ -54,6 +53,7 @@
                                 @lang('layout.common.buttons.destroy')
                             </a>
                             @endcan
+                            <a href="{{ route('tasks.edit', $task) }}">@lang('layout.common.buttons.edit')</a>
                         @endauth
                         </td>
                     </tr>
