@@ -5,10 +5,12 @@ namespace App\Policies;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\GuardHelpers;
 
 class TaskPolicy
 {
     use HandlesAuthorization;
+    use GuardHelpers;
 
     public function viewAny(?User $user): bool
     {
@@ -20,14 +22,14 @@ class TaskPolicy
         return true;
     }
 
-    public function create(): void
+    public function create(): bool
     {
-        Auth:check();
+        return $this->check();
     }
 
-    public function update(User $user, Task $task): void
+    public function update(): bool
     {
-        Auth:check();
+        return $this->check();
     }
 
     public function delete(User $user, Task $task): bool
