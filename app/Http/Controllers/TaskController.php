@@ -177,7 +177,7 @@ class TaskController extends Controller
 
         flash()->success(__('flash.task_modify_success'));
 
-        return redirect()->route('tasks.show', $task);
+        return redirect()->route('tasks.index');
     }
 
     /**
