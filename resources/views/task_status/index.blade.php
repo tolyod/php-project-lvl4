@@ -1,13 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
         <h1 class="mb-5">@lang('layout.task_statuses')</h1>
         @auth
             <p>
                 <a class="btn btn-primary" href="{{ route('task_statuses.create') }}">@lang('layout.common.buttons.create')</a>
             </p>
         @endauth
-        <main class="row justify-content-center">
             <table class="table">
                 <thead>
                 <tr>
@@ -41,6 +39,4 @@
                 @endforeach
                 </tbody>
             </table>
-        </main>
-    </div>
 @endsection

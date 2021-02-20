@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
         <h1 class="mb-5">@lang('layout.tasks')</h1>
         @auth
             <p>
@@ -18,7 +17,6 @@
                 {!! Form::submit(__('layout.common.buttons.apply'), ['class' => 'btn btn-outline-primary mr-2']) !!}
             {!! Form::close() !!}
         </div>
-        <div class="row justify-content-center">
             <table class="table">
                 <thead>
                 <tr>
@@ -60,6 +58,4 @@
                 @endforeach
                 </tbody>
             </table>
-        </div>
-    </div>
 @endsection
