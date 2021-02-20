@@ -33,30 +33,50 @@ class LabelTest extends TestCase
         $indexUrl = route('labels.index');
         $storeUrl = route('labels.store');
         $name = $this->faker->word;
+        $description = $this->faker->realText(60, 2);
 
         $this
             ->actingAs($this->user)
             ->from($indexUrl);
 
-        $response = $this->post($storeUrl, ['name' => $name]);
+        $response = $this->post(
+            $storeUrl,
+            [
+                'name' => $name,
+                'description' => $description
+            ]
+        );
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
-        $this->assertDatabaseHas('labels', ['name' => $name]);
+        $this->assertDatabaseHas(
+            'labels',
+            [
+                'name' => $name,
+                'description' => $description
+            ]
+        );
     }
 
     public function testUpdate()
     {
         $label = Label::inRandomOrder()->first();
         $indexUrl = route('labels.index');
-        $storeUrl = route('labels.update', $label);
+        $updateUrl = route('labels.update', $label);
         $name = $this->faker->word;
+        $description = $this->faker->realText(60, 2);
 
         $this
             ->actingAs($this->user)
             ->from($indexUrl);
 
-        $response = $this->patch($storeUrl, ['name' => $name]);
+        $response = $this->patch(
+            $updateUrl,
+            [
+                'name' => $name,
+                'description' => $description
+            ]
+        );
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
