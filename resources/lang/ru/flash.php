@@ -8,5 +8,5 @@ return [
     'task_delete_success' => 'Задача успешно удалена',
     'task_modify_success' => 'Задача успешно изменена',
     'label_delete_success' => 'Метка успешно удалена',
-    'label_modify_success' => 'Метки успешно изменена'
+    'label_modify_success' => 'Метка успешно изменена'
 ];
