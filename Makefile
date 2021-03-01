@@ -8,6 +8,7 @@ setup:
 	touch database/database.sqlite || true
 	php artisan migrate
 	npm install
+	mkdir -p build/logs
 
 serve:
 	php artisan serve
@@ -26,6 +27,9 @@ log:
 
 test:
 	php artisan test
+
+coverage:
+	php artisan test --coverage-text --coverage-clover build/logs/clover.xml
 
 deploy:
 	git push heroku
