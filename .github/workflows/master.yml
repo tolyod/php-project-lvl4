@@ -26,6 +26,14 @@ jobs:
 
     - name: Check lint
       run: make lint
+      
+    - name: download & run test reporter before-build
+    - run: curl -o ./cc-test-reporter -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+    - run: chmod +x ./cc-test-reporter
+    - run: ./cc-test-reporter before-build
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: make test
+    
+    - name: run test reporter after-build
+      run: cc-test-reporter after-build
