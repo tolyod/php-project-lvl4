@@ -10,7 +10,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+#     runs-on: ubuntu-20.04
+    runs-on: self-hosted
     env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
