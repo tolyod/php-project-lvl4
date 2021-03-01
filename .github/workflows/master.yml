@@ -33,4 +33,4 @@ jobs:
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
         make test
-        ./cc-test-reporter after-build -t clover --exit-code $?
+        ./cc-test-reporter after-build -t clover --prefix ./storage/logs --exit-code $?
