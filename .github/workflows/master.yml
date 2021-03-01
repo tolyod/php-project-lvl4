@@ -28,7 +28,7 @@ jobs:
       run: make lint
 
     - name: download & run test reporter before-build
-    - run: | 
+      run: | 
         curl -o ./cc-test-reporter -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
