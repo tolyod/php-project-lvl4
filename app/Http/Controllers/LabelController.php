@@ -18,7 +18,7 @@ class LabelController extends Controller
      */
     public function index()
     {
-        $labels = Label::all();
+        $labels = Label::paginate();
 
         return view('label.index', compact('labels'));
     }
@@ -43,9 +43,10 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
+        $this->validate(
+            $request,
+            ['name' => 'required|unique:labels']
+        );
 
         $label = new Label();
         $label->name = $request->input('name');
@@ -77,9 +78,10 @@ class LabelController extends Controller
      */
     public function update(Request $request, Label $label)
     {
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
+        $this->validate(
+            $request,
+            ['name' => 'required|unique:labels']
+        );
 
         $label->name = $request->input('name');
         $label->description = $request->input('description');
@@ -98,6 +100,10 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
+        if (filled($label->tasks->first())) {
+            flash()->error(__('flash.label_delete_task_exists_error'));
+            return back();
+        }
         $label->delete();
         /* @phpstan-ignore-next-line */
         flash()->success(__('flash.label_delete_success'));

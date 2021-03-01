@@ -30,7 +30,7 @@ class TaskController extends Controller
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id')
             ])
-            ->get();
+            ->simplePaginate(12)->withQueryString();
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn(TaskStatus $taskStatus) => [
                 $taskStatus->id => $taskStatus->name

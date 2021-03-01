@@ -39,4 +39,5 @@
                 @endforeach
                 </tbody>
             </table>
+            <div>{{ $labels->links() }}
 @endsection

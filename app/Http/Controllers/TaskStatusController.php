@@ -43,7 +43,10 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required']);
+        $this->validate(
+            $request,
+            ['name' => 'required|unique:task_statuses']
+        );
         $taskStatus = new TaskStatus();
 
         $taskStatus->name = $request->input('name');
@@ -73,7 +76,10 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        $this->validate($request, ['name' => 'required']);
+        $this->validate(
+            $request,
+            [ 'name' => 'required|unique:task_statuses']
+        );
         $taskStatus->name = $request->input('name');
         $taskStatus->saveOrFail();
         /* @phpstan-ignore-next-line */
@@ -90,6 +96,10 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
+        if (filled($taskStatus->tasks->first())) {
+            flash()->error(__('flash.status_delete_task_exists_error'));
+            return back();
+        }
         $taskStatus->delete();
         /* @phpstan-ignore-next-line */
         flash()->success(__('flash.status_delete_success'));
