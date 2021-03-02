@@ -18,9 +18,14 @@ jobs:
           ROLLBAR_TOKEN: ${{ secrets.ROLLBAR_TOKEN }}
     steps:
     - uses: actions/checkout@v1
-
-    - name: PHP Security Checker
-      uses: StephaneBour/actions-php-security-checker@1.1
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.0
+        extensions: mbstring, intl, xml, curl, zip, dom, json, openssl, sqlite3
+        coverage: xdebug        
+        tools: php-cs-fixer, phpunit
 
     - name: Setup project
       run: make setup
@@ -36,10 +41,3 @@ jobs:
       with:
         coverageCommand: make coverage
         debug: true
-#     - name: Execute tests (Unit and Feature tests) via PHPUnit & Code Climate test reporter
-#       run: |
-#         curl -o ./cc-test-reporter -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-#         chmod +x ./cc-test-reporter
-#         ./cc-test-reporter before-build
-#         make test
-#         ./cc-test-reporter after-build -t clover --prefix ./storage/logs --exit-code $?
