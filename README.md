@@ -10,7 +10,7 @@
 demo of [task-manager](https://task-manager-apoloz.herokuapp.com/) on Heroku
 
 ## Requirements
-Проверить зависимости PHP можно командой composer check-platform-reqs
+Проверить зависимости PHP можно командой `$ composer check-platform-reqs`
 
 * PHP 8+
 * Extensions:
