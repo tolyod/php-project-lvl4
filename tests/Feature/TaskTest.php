@@ -14,6 +14,7 @@ class TaskTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        /* @phpstan-ignore-next-line */
         $this->task = Task::inRandomOrder()->first();
     }
 
