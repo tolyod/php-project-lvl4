@@ -9,12 +9,14 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    protected Task $task;
+    /**
+     * @var Task|null $task
+     * */
+    protected $task;
 
     public function setUp(): void
     {
         parent::setUp();
-        /* @phpstan-ignore-next-line */
         $this->task = Task::inRandomOrder()->first();
     }
 
@@ -22,6 +24,7 @@ class TaskTest extends TestCase
     {
         $indexUrl = route('tasks.index');
         $response = $this->get($indexUrl);
+        /* @phpstan-ignore-next-line */
         $taskName = $this->task->name;
         $response
             ->assertOk()
@@ -32,6 +35,7 @@ class TaskTest extends TestCase
     {
         $showUrl = route('tasks.show', $this->task);
         $response = $this->get($showUrl);
+        /* @phpstan-ignore-next-line */
         $taskName = $this->task->name;
         $response
             ->assertOk()
@@ -50,25 +54,15 @@ class TaskTest extends TestCase
 
     public function testStore(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
-        $storeUrl = route('tasks.store');
-        /* @phpstan-ignore-next-line */
-        $taskStatusId = $taskStatus->id;
+        $data = Task::factory()->make()->only(
+            ['name', 'description', 'status_id']
+        );
 
-        $this
+        $response = $this
             ->actingAs($this->user)
-            ->from(route('tasks.index'));
-
-        $data = [
-            'name' => $this->faker->word,
-            'description' => $this->faker->sentences(5, true),
-            'status_id' => $taskStatusId,
-        ];
-        $response = $this->post($storeUrl, $data);
-        $response->assertRedirect();
-        $response->assertSessionDoesntHaveErrors();
-
-        $this->assertDatabaseHas('tasks', array_merge($data, ['created_by_id' => $this->user->id]));
+            ->from(route('tasks.create'))
+            ->post(route('tasks.store'), $data);
+        $response->assertSessionHasNoErrors();
     }
 
     public function testUpdate(): void
@@ -83,17 +77,18 @@ class TaskTest extends TestCase
         /* @phpstan-ignore-next-line */
         $taskCreatorId = $this->task->creator->id;
 
-        $this
-            ->actingAs($this->user)
-            ->from(route('tasks.index'));
-
         $data = [
             'name' => $this->faker->word,
             'description' => $this->faker->sentences(5, true),
             'status_id' => $taskStatusId,
             'assigned_to_id' => $this->user->id
         ];
-        $response = $this->patch($updateUrl, $data);
+
+        $response = $this
+            ->actingAs($this->user)
+            ->from(route('tasks.index'))
+            ->patch($updateUrl, $data);
+
         $response->assertRedirect();
         $response->assertSessionDoesntHaveErrors();
 

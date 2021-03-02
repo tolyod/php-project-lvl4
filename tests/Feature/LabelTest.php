@@ -7,11 +7,20 @@ use Tests\TestCase;
 
 class LabelTest extends TestCase
 {
+    /**
+    * @var Label|null $label
+    * */
+    protected $label;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->label = Label::inRandomOrder()->first();
+    }
     public function testIndex(): void
     {
-        $label = Label::inRandomOrder()->first();
         /* @phpstan-ignore-next-line */
-        $labelName = $label->name;
+        $labelName = $this->label->name;
         $indexUrl = route('labels.index');
         $response = $this->get($indexUrl);
         $response
@@ -21,8 +30,7 @@ class LabelTest extends TestCase
 
     public function testCreate(): void
     {
-        $label = Label::inRandomOrder()->first();
-        $createUrl = route('labels.create', $label);
+        $createUrl = route('labels.create', $this->label);
 
         $this->actingAs($this->user);
 
@@ -62,23 +70,22 @@ class LabelTest extends TestCase
 
     public function testUpdate(): void
     {
-        $label = Label::inRandomOrder()->first();
+        $label = $this->label;
         $indexUrl = route('labels.index');
         $updateUrl = route('labels.update', $label);
         $name = $this->faker->word;
         $description = $this->faker->realText(60, 2);
 
-        $this
+        $response = $this
             ->actingAs($this->user)
-            ->from($indexUrl);
-
-        $response = $this->patch(
-            $updateUrl,
-            [
-                'name' => $name,
-                'description' => $description
-            ]
-        );
+            ->from($indexUrl)
+            ->patch(
+                $updateUrl,
+                [
+                    'name' => $name,
+                    'description' => $description
+                ]
+            );
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
@@ -87,9 +94,9 @@ class LabelTest extends TestCase
 
     public function testEdit(): void
     {
-        $label = Label::inRandomOrder()->first();
+        $label = $this->label;
         /* @phpstan-ignore-next-line */
-        $labelName = $label->name;
+        $labelName = $this->label->name;
         $editUrl = route('labels.edit', $label);
 
         $this->actingAs($this->user);
@@ -102,8 +109,7 @@ class LabelTest extends TestCase
 
     public function testDelete(): void
     {
-        $label = Label::inRandomOrder()->first();
-        $deleteUrl = route('labels.destroy', $label);
+        $deleteUrl = route('labels.destroy', $this->label);
 
         $indexUrl = route('labels.index');
         $this->actingAs($this->user)->from($indexUrl);
@@ -113,6 +119,6 @@ class LabelTest extends TestCase
         $response->assertSessionDoesntHaveErrors();
 
         /* @phpstan-ignore-next-line */
-        $this->assertDeleted($label);
+        $this->assertDeleted($this->label);
     }
 }

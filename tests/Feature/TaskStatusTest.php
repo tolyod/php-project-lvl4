@@ -7,13 +7,23 @@ use Tests\TestCase;
 
 class TaskStatusTest extends TestCase
 {
+    /**
+     * @var TaskStatus|null $taskStatus
+     * */
+    private $taskStatus;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->taskStatus = TaskStatus::inRandomOrder()->first();
+    }
+
     public function testIndex(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
-        /* @phpstan-ignore-next-line */
-        $taskStatusName = $taskStatus->name;
         $indexUrl = route('task_statuses.index');
         $response = $this->get($indexUrl);
+        /* @phpstan-ignore-next-line */
+        $taskStatusName = $this->taskStatus->name;
         $response
             ->assertOk()
             ->assertSee($taskStatusName);
@@ -25,10 +35,10 @@ class TaskStatusTest extends TestCase
         $storeUrl = route('task_statuses.store');
         $name = $this->faker->word;
 
-        $this
+        $response = $this
             ->actingAs($this->user)
-            ->from($indexUrl);
-        $response = $this->post($storeUrl, ['name' => $name]);
+            ->from($indexUrl)
+            ->post($storeUrl, ['name' => $name]);
         $response->assertRedirect($indexUrl);
 
         $this->assertDatabaseHas('task_statuses', ['name' => $name]);
@@ -36,7 +46,7 @@ class TaskStatusTest extends TestCase
 
     public function testStoreByGuest(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
+        $taskStatus = $this->taskStatus;
         $storeUrl = route('task_statuses.store', $taskStatus);
         $loginUrl = route('login');
         $name = $this->faker->word;
