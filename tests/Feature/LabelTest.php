@@ -21,8 +21,7 @@ class LabelTest extends TestCase
     {
         /* @phpstan-ignore-next-line */
         $labelName = $this->label->name;
-        $indexUrl = route('labels.index');
-        $response = $this->get($indexUrl);
+        $response = $this->get(route('labels.index'));
         $response
             ->assertOk()
             ->assertSee($labelName);
@@ -32,9 +31,7 @@ class LabelTest extends TestCase
     {
         $createUrl = route('labels.create', $this->label);
 
-        $this->actingAs($this->user);
-
-        $response = $this->get($createUrl);
+        $response = $this->actingAs($this->user)->get($createUrl);
         $response->assertOk();
     }
 
@@ -42,54 +39,33 @@ class LabelTest extends TestCase
     {
         $indexUrl = route('labels.index');
         $storeUrl = route('labels.store');
-        $name = $this->faker->word;
-        $description = $this->faker->realText(60, 2);
-
-        $this
-            ->actingAs($this->user)
-            ->from($indexUrl);
-
-        $response = $this->post(
-            $storeUrl,
-            [
-                'name' => $name,
-                'description' => $description
-            ]
-        );
-        $response->assertRedirect($indexUrl);
-        $response->assertSessionDoesntHaveErrors();
-
-        $this->assertDatabaseHas(
-            'labels',
-            [
-                'name' => $name,
-                'description' => $description
-            ]
-        );
-    }
-
-    public function testUpdate(): void
-    {
-        $label = $this->label;
-        $indexUrl = route('labels.index');
-        $updateUrl = route('labels.update', $label);
-        $name = $this->faker->word;
-        $description = $this->faker->realText(60, 2);
+        $data = Label::factory()->make()->only(['name', 'description']);
 
         $response = $this
             ->actingAs($this->user)
             ->from($indexUrl)
-            ->patch(
-                $updateUrl,
-                [
-                    'name' => $name,
-                    'description' => $description
-                ]
-            );
+            ->post($storeUrl, $data);
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
-        $this->assertDatabaseHas('labels', ['name' => $name]);
+        $this->assertDatabaseHas('labels', $data);
+    }
+
+    public function testUpdate(): void
+    {
+        $indexUrl = route('labels.index');
+        $updateUrl = route('labels.update', $this->label);
+        $data = Label::factory()->make()->only(['name', 'description']);
+
+        $response = $this
+            ->actingAs($this->user)
+            ->from($indexUrl)
+            ->patch($updateUrl, $data);
+
+        $response->assertRedirect($indexUrl);
+        $response->assertSessionDoesntHaveErrors();
+
+        $this->assertDatabaseHas('labels', $data);
     }
 
     public function testEdit(): void
@@ -99,9 +75,7 @@ class LabelTest extends TestCase
         $labelName = $this->label->name;
         $editUrl = route('labels.edit', $label);
 
-        $this->actingAs($this->user);
-
-        $response = $this->get($editUrl);
+        $response = $this->actingAs($this->user)->get($editUrl);
         $response
             ->assertOk()
             ->assertSee($labelName);
@@ -110,11 +84,12 @@ class LabelTest extends TestCase
     public function testDelete(): void
     {
         $deleteUrl = route('labels.destroy', $this->label);
-
         $indexUrl = route('labels.index');
-        $this->actingAs($this->user)->from($indexUrl);
 
-        $response = $this->delete($deleteUrl);
+        $response = $this
+            ->actingAs($this->user)
+            ->from($indexUrl)
+            ->delete($deleteUrl);
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 

@@ -20,8 +20,7 @@ class TaskStatusTest extends TestCase
 
     public function testIndex(): void
     {
-        $indexUrl = route('task_statuses.index');
-        $response = $this->get($indexUrl);
+        $response = $this->get(route('task_statuses.index'));
         /* @phpstan-ignore-next-line */
         $taskStatusName = $this->taskStatus->name;
         $response
@@ -32,73 +31,67 @@ class TaskStatusTest extends TestCase
     public function testStore(): void
     {
         $indexUrl = route('task_statuses.index');
-        $storeUrl = route('task_statuses.store');
-        $name = $this->faker->word;
+        $data = TaskStatus::factory()->make()->only('name');
 
         $response = $this
             ->actingAs($this->user)
             ->from($indexUrl)
-            ->post($storeUrl, ['name' => $name]);
+            ->post(route('task_statuses.store'), $data);
         $response->assertRedirect($indexUrl);
 
-        $this->assertDatabaseHas('task_statuses', ['name' => $name]);
+        $this->assertDatabaseHas('task_statuses', $data);
     }
 
     public function testStoreByGuest(): void
     {
         $taskStatus = $this->taskStatus;
         $storeUrl = route('task_statuses.store', $taskStatus);
-        $loginUrl = route('login');
-        $name = $this->faker->word;
+        $data = TaskStatus::factory()->make()->only('name');
 
-        $response = $this->post($storeUrl, ['name' => $name]);
-        $response->assertRedirect($loginUrl);
+        $response = $this->post($storeUrl, $data);
+        $response->assertRedirect(route('login'));
 
         $this->assertGuest();
-        $this->assertDatabaseMissing('task_statuses', ['name' => $name]);
+        $this->assertDatabaseMissing('task_statuses', $data);
     }
 
     public function testUpdate(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
         $indexUrl = route('task_statuses.index');
-        $storeUrl = route('task_statuses.update', $taskStatus);
-        $name = $this->faker->word;
+        $storeUrl = route('task_statuses.update', $this->taskStatus);
+        $data = TaskStatus::factory()->make()->only('name');
 
-        $this
+        $response = $this
             ->actingAs($this->user)
-            ->from($indexUrl);
-
-        $response = $this->patch($storeUrl, ['name' => $name]);
+            ->from($indexUrl)
+            ->patch($storeUrl, $data);
         $response->assertRedirect($indexUrl);
 
-        $this->assertDatabaseHas('task_statuses', ['name' => $name]);
+        $this->assertDatabaseHas('task_statuses', $data);
     }
 
     public function testUpdateByGuest(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
-        $updateUrl = route('task_statuses.update', $taskStatus);
+        $updateUrl = route('task_statuses.update', $this->taskStatus);
         $loginUrl = route('login');
-        $name = $this->faker->word;
+        $data = TaskStatus::factory()->make()->only('name');
 
-        $response = $this->patch($updateUrl, ['name' => $name]);
+        $response = $this->patch($updateUrl, $data);
         $response->assertRedirect($loginUrl);
 
         $this->assertGuest();
-        $this->assertDatabaseMissing('task_statuses', ['name' => $name]);
+        $this->assertDatabaseMissing('task_statuses', $data);
     }
 
     public function testEdit(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
         /* @phpstan-ignore-next-line */
-        $taskStatusName = $taskStatus->name;
-        $editUrl = route('task_statuses.edit', $taskStatus);
+        $taskStatusName = $this->taskStatus->name;
+        $editUrl = route('task_statuses.edit', $this->taskStatus);
 
-        $this->actingAs($this->user);
-
-        $response = $this->get($editUrl);
+        $response = $this
+            ->actingAs($this->user)
+            ->get($editUrl);
         $response
             ->assertOk()
             ->assertSee($taskStatusName);
@@ -106,42 +99,37 @@ class TaskStatusTest extends TestCase
 
     public function testEditByGuest(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
-        $editUrl = route('task_statuses.edit', $taskStatus);
-        $loginUrl = route('login');
+        $editUrl = route('task_statuses.edit', $this->taskStatus);
 
         $response = $this->get($editUrl);
 
         $this->assertGuest();
-        $response->assertRedirect($loginUrl);
+        $response->assertRedirect(route('login'));
     }
 
     public function testDelete(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
-        $deleteUrl = route('task_statuses.destroy', $taskStatus);
-
+        $deleteUrl = route('task_statuses.destroy', $this->taskStatus);
         $indexUrl = route('task_statuses.index');
-        $this->actingAs($this->user)->from($indexUrl);
 
-        $response = $this->delete($deleteUrl);
+        $response = $this
+            ->actingAs($this->user)
+            ->from($indexUrl)
+            ->delete($deleteUrl);
         $response->assertRedirect($indexUrl);
 
         /* @phpstan-ignore-next-line */
-        $this->assertDeleted($taskStatus);
+        $this->assertDeleted($this->taskStatus);
     }
 
     public function testDeleteByGuest(): void
     {
-        $taskStatus = TaskStatus::inRandomOrder()->first();
-        $deleteUrl = route('task_statuses.destroy', $taskStatus);
-
-        $loginUrl = route('login');
+        $deleteUrl = route('task_statuses.destroy', $this->taskStatus);
 
         $response = $this->delete($deleteUrl);
-        $response->assertRedirect($loginUrl);
+        $response->assertRedirect(route('login'));
 
         /* @phpstan-ignore-next-line */
-        $this->assertDatabaseHas('task_statuses', $taskStatus->only('id', 'name'));
+        $this->assertDatabaseHas('task_statuses', $this->taskStatus->only('id', 'name'));
     }
 }
