@@ -20,6 +20,10 @@ use App\Http\Controllers\LabelController;
 Auth::routes();
 
 Route::resource('/', HomeController::class)->only('index');
-Route::resource('task_statuses', TaskStatusController::class)->except('show');
-Route::resource('tasks', TaskController::class);
-Route::resource('labels', LabelController::class)->except('show');
+Route::resources(
+    [
+        'task_statuses' => TaskStatusController::class,
+        'labels' => LabelController::class,
+        'tasks' => TaskController::class
+    ],
+);
