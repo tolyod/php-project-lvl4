@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class TaskStatusController extends Controller
 {
@@ -78,8 +80,15 @@ class TaskStatusController extends Controller
     {
         $this->validate(
             $request,
-            [ 'name' => 'required|unique:task_statuses']
+            [
+                'name' => [
+                    'required',
+                    'max:255',
+                    Rule::unique('task_statuses')->ignore($taskStatus->id)
+                ]
+            ]
         );
+
         $taskStatus->name = $request->input('name');
         $taskStatus->saveOrFail();
         /* @phpstan-ignore-next-line */
