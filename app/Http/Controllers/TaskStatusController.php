@@ -97,7 +97,7 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus)
     {
         if (filled($taskStatus->tasks->first())) {
-            /** @var string $argument */
+            /** @var string $errorMessage */
             $errorMessage = __('flash.status_delete_task_exists_error');
             flash()->error($errorMessage);
             return back();
