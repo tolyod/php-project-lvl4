@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use Illuminate\Http\Request;
-use App\Models\TaskStatus;
-use App\Models\User;
-use App\Models\Label;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Models\{Task, TaskStatus, User, Label};
+use Spatie\QueryBuilder\{AllowedFilter, QueryBuilder};
 
 class TaskController extends Controller
 {
@@ -21,7 +17,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index()
+    public function index(Request $request)
     {
         $tasks = QueryBuilder::for(Task::class)
             ->with('creator', 'status', 'assignee', 'status', 'labels')
@@ -32,20 +28,15 @@ class TaskController extends Controller
             ])
             ->simplePaginate(12)->withQueryString();
         $taskStatuses = TaskStatus::all()
-            ->mapWithKeys(fn(TaskStatus $taskStatus) => [
-                $taskStatus->id => $taskStatus->name
-            ])
-            ->prepend(__('layout.task_status'), '');
+            ->pluck('name', 'id');
 
-        $users = User::all()
-            ->mapWithKeys(fn(User $user) => [
-                $user->id => $user->name
-            ]);
+        $users = User::all()->pluck('name', 'id');
 
-        $creators = collect($users->all())->prepend(__('layout.task.creator'), '');
-        $assigns = collect($users->all())->prepend(__('layout.task.assignee'), '');
+        $creators = $users->all();
+        $assigns = $users->all();
+        $filter = $request->input('filter');
 
-        return view('task.index', compact('tasks', 'taskStatuses', 'users', 'creators', 'assigns'));
+        return view('task.index', compact('tasks', 'taskStatuses', 'users', 'creators', 'assigns', 'filter'));
     }
 
     /**
@@ -57,19 +48,9 @@ class TaskController extends Controller
     {
         $task = new Task();
 
-        $taskStatuses = TaskStatus::all()
-            ->mapWithKeys(fn(TaskStatus $taskStatus) => [
-                $taskStatus->id => $taskStatus->name
-            ]);
-        $users = User::all()
-            ->mapWithKeys(fn(User $user) => [
-                $user->id => $user->name
-            ]);
-
-        $labels = Label::all()
-            ->mapWithKeys(fn(Label $label) => [
-                $label->id => $label->name
-            ]);
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
+        $users = User::all()->pluck('name', 'id');
+        $labels = Label::all()->pluck('name', 'id');
 
         $view = view('task.create', compact('task', 'taskStatuses', 'users', 'labels'));
 
@@ -133,19 +114,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $labels = Label::all()
-            ->mapWithKeys(fn(Label $label) => [
-                $label->id => $label->name
-            ]);
-
-        $taskStatuses = TaskStatus::all()
-            ->mapWithKeys(fn(TaskStatus $taskStatus) => [
-                $taskStatus->id => $taskStatus->name
-            ]);
-        $users = User::all()
-            ->mapWithKeys(fn(User $user) => [
-                $user->id => $user->name
-            ]);
+        $labels = Label::all()->pluck('name', 'id');
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
+        $users = User::all()->pluck('name', 'id');
 
         return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
     }

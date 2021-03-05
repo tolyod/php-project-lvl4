@@ -4,10 +4,25 @@
         <div class="d-flex">
             <div>
             {!! Form::open(['route' => 'tasks.index', 'method' => 'GET', 'class' => 'form-inline']) !!}
-            {!! Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'form-control mr-2']) !!}
-            {!! Form::select('filter[created_by_id]', $creators, null, ['class' => 'form-control mr-2']) !!}
-            {!! Form::select('filter[assigned_to_id]', $assigns, null, ['class' => 'form-control mr-2']) !!}
-            {!! Form::submit(__('layout.common.buttons.apply'), ['class' => 'btn btn-outline-primary mr-2']) !!}
+                {!! Form::select(
+                    'filter[status_id]',
+                    $taskStatuses,
+                    data_get($filter, 'status_id', null),
+                    ['class' => 'form-control mr-2', 'placeholder' => __('layout.task_status')])
+                !!}
+                {!! Form::select(
+                    'filter[created_by_id]',
+                    $creators,
+                    data_get($filter, 'created_by_id', null),
+                    ['class' => 'form-control mr-2', 'placeholder' => __('layout.task.creator')])
+                !!}
+                {!! Form::select(
+                        'filter[assigned_to_id]',
+                        $assigns,
+                        data_get($filter, 'assigned_to_id', null),
+                        ['class' => 'form-control mr-2', 'placeholder' => __('layout.task.assignee')])
+                !!}
+                {!! Form::submit(__('layout.common.buttons.apply'), ['class' => 'btn btn-outline-primary mr-2']) !!}
             {!! Form::close() !!}
             </div>
             @auth
