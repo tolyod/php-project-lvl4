@@ -15,7 +15,7 @@ class TaskStatusTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->taskStatus = TaskStatus::inRandomOrder()->first();
+        $this->taskStatus = TaskStatus::notNewInRandomOrder()->first();
     }
 
     public function testIndex(): void
@@ -66,6 +66,7 @@ class TaskStatusTest extends TestCase
             ->from($indexUrl)
             ->patch($storeUrl, $data);
         $response->assertRedirect($indexUrl);
+        $response->assertSessionDoesntHaveErrors();
 
         $this->assertDatabaseHas('task_statuses', $data);
     }
@@ -117,6 +118,7 @@ class TaskStatusTest extends TestCase
             ->from($indexUrl)
             ->delete($deleteUrl);
         $response->assertRedirect($indexUrl);
+        $response->assertSessionDoesntHaveErrors();
 
         /* @phpstan-ignore-next-line */
         $this->assertDeleted($this->taskStatus);
