@@ -114,11 +114,16 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $labels = Label::all()->pluck('name', 'id');
+        $placeholder = '';
+        $labels = Label::all()->pluck('name', 'id')->prepend($placeholder);
         $taskStatuses = TaskStatus::all()->pluck('name', 'id');
         $users = User::all()->pluck('name', 'id');
+        $labelsSelected = $task->labels->pluck('id')->all();
+        $labelsOptions = $labels
+            ->map(fn($item) => $item === $placeholder ? ['disabled' => 'disabled'] : [])
+            ->all();
 
-        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
+        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels', 'labelsSelected', 'labelsOptions'));
     }
 
     /**
@@ -134,7 +139,8 @@ class TaskController extends Controller
             'name' => 'required',
             'description' => 'nullable|string',
             'status_id' => 'required|integer',
-            'assigned_to_id' => 'nullable|integer'
+            'assigned_to_id' => 'nullable|integer',
+            'labels.*' => 'nullable|integer'
         ]);
 
         $task->name = $request->input('name');
