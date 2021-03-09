@@ -7,19 +7,19 @@
                 {!! Form::select(
                     'filter[status_id]',
                     $taskStatuses,
-                    data_get($filter, 'status_id', null),
+                    $filter['status_id'] ?? '',
                     ['class' => 'form-control mr-2', 'placeholder' => __('layout.task_status')])
                 !!}
                 {!! Form::select(
                     'filter[created_by_id]',
                     $creators,
-                    data_get($filter, 'created_by_id', null),
+                    $filter['created_by_id'] ?? '',
                     ['class' => 'form-control mr-2', 'placeholder' => __('layout.task.creator')])
                 !!}
                 {!! Form::select(
                         'filter[assigned_to_id]',
                         $assigns,
-                        data_get($filter, 'assigned_to_id', null),
+                        $filter['assigned_to_id'] ?? '',
                         ['class' => 'form-control mr-2', 'placeholder' => __('layout.task.assignee')])
                 !!}
                 {!! Form::submit(__('layout.common.buttons.apply'), ['class' => 'btn btn-outline-primary mr-2']) !!}
