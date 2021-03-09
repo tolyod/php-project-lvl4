@@ -39,5 +39,5 @@
                 @endforeach
                 </tbody>
             </table>
-            <div>{{ $labels->links() }}
+            {{ $labels->links() }}
 @endsection
