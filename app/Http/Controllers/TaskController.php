@@ -89,7 +89,7 @@ class TaskController extends Controller
 
         $task->saveOrFail();
         $task->labels()->attach($request->input('labels'));
-        flash()->success(strval(__('flash.task_create_success')));
+        flash(__('flash.task_create_success'))->success();
 
         return redirect()->route('tasks.index');
     }
@@ -146,7 +146,7 @@ class TaskController extends Controller
         $task->saveOrFail();
 
         $task->labels()->sync($labels);
-        flash()->success(strval(__('flash.task_modify_success')));
+        flash(__('flash.task_modify_success'))->success();
 
         return redirect()->route('tasks.index');
     }
@@ -165,7 +165,7 @@ class TaskController extends Controller
     {
         if ($request->user()->can('delete', $task)) {
             $task->delete();
-            flash()->success(strval(__('flash.task_delete_success')));
+            flash(__('flash.task_delete_success'))->success();
 
             return redirect()->route('tasks.index');
         }

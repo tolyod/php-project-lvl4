@@ -52,7 +52,7 @@ class TaskStatusController extends Controller
 
         $taskStatus->name = $request->input('name');
         $taskStatus->saveOrFail();
-        flash()->success(strval(__('flash.status_create_success')));
+        flash(__('flash.status_create_success'))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -89,7 +89,7 @@ class TaskStatusController extends Controller
 
         $taskStatus->name = $request->input('name');
         $taskStatus->saveOrFail();
-        flash()->success(strval(__('flash.status_modify_success')));
+        flash(__('flash.status_modify_success'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -109,7 +109,7 @@ class TaskStatusController extends Controller
             return back();
         }
         $taskStatus->delete();
-        flash()->success(strval(__('flash.status_delete_success')));
+        flash(__('flash.status_delete_success'))->success();
 
         return back();
     }

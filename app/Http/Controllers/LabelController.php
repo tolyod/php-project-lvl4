@@ -53,7 +53,7 @@ class LabelController extends Controller
         $label->name = $request->input('name');
         $label->description = $request->input('description');
         $label->saveOrFail();
-        flash()->success(strval(__('flash.label_create_success')));
+        flash(__('flash.label_create_success'))->success();
 
         return redirect()->route('labels.index');
     }
@@ -92,7 +92,7 @@ class LabelController extends Controller
         $label->name = $request->input('name');
         $label->description = $request->input('description');
         $label->saveOrFail();
-        flash()->success(strval(__('flash.label_modify_success')));
+        flash()->success(__('flash.label_modify_success'));
 
         return redirect()->route('labels.index');
     }
@@ -112,7 +112,7 @@ class LabelController extends Controller
             return back();
         }
         $label->delete();
-        flash()->success(strval(__('flash.label_delete_success')));
+        flash(__('flash.label_delete_success'))->success();
 
         return redirect()->route('labels.index');
     }
