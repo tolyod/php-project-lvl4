@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\TaskStatus
- *
- * @property mixed $id
+ * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -17,13 +16,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $tasks_count
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus notNewInRandomOrder()
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus query()
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus first()
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus whereUpdatedAt($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus notNewInRandomOrder()
  */
 class TaskStatus extends Model
 {
@@ -44,6 +44,7 @@ class TaskStatus extends Model
      */
     public function scopeNotNewInRandomOrder($query)
     {
-        return $query->inRandomOrder()->where('id', '>', 1);
+        $newStatusId = 1;
+        return $query->inRandomOrder()->where('id', '>', $newStatusId);
     }
 }

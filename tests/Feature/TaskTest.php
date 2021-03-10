@@ -9,12 +9,12 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    protected Task $task;
+    protected Mixed $task;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->task = optional(Task::inRandomOrder())->first();
+        $this->task = Task::inRandomOrder()->first();
     }
 
     public function testIndex(): void
@@ -64,11 +64,12 @@ class TaskTest extends TestCase
 
     public function testUpdate(): void
     {
+        /** @var Mixed $taskStatus */
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $updateUrl = route('tasks.update', $this->task);
-        $taskStatusId = optional($taskStatus)->id;
-        $taskId = optional($this->task)->id;
-        $taskCreatorId = optional($this->task)->creator->id;
+        $taskStatusId = $taskStatus->id;
+        $taskId = $this->task->id;
+        $taskCreatorId = $this->task->creator->id;
 
         $data = [
             'name' => $this->faker->word,
@@ -93,7 +94,7 @@ class TaskTest extends TestCase
 
     public function testEdit(): void
     {
-        $taskName = optional($this->task)->name;
+        $taskName = $this->task->name;
         $editUrl = route('tasks.edit', $this->task);
 
         $this->actingAs($this->user);

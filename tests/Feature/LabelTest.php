@@ -7,13 +7,14 @@ use Tests\TestCase;
 
 class LabelTest extends TestCase
 {
-    protected Label $label;
+    protected Mixed $label;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->label = optional(Label::inRandomOrder())->first();
+        $this->label = Label::inRandomOrder()->first();
     }
+
     public function testIndex(): void
     {
         $labelName = $this->label->name;
