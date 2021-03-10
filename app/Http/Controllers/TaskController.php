@@ -114,16 +114,11 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $placeholder = '';
-        $labels = Label::all()->pluck('name', 'id')->prepend($placeholder);
+        $labels = Label::all()->pluck('name', 'id');
         $taskStatuses = TaskStatus::all()->pluck('name', 'id');
         $users = User::all()->pluck('name', 'id');
-        $labelsSelected = $task->labels->pluck('id')->all();
-        $labelsOptions = $labels
-            ->map(fn($item) => $item === $placeholder ? ['disabled' => 'disabled'] : [])
-            ->all();
 
-        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels', 'labelsSelected', 'labelsOptions'));
+        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
     /**
@@ -148,9 +143,10 @@ class TaskController extends Controller
 
         $task->status()->associate($request->input('status_id'));
         $task->assignee()->associate($request->input('assigned_to_id'));
-
+        $labels = collect($request->input('labels'))->filter()->all();
         $task->saveOrFail();
-        $task->labels()->sync($request->input('labels'));
+
+        $task->labels()->sync($labels);
         /* @phpstan-ignore-next-line */
         flash()->success(__('flash.task_modify_success'));
 

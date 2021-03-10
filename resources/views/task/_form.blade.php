@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('labels', __('layout.labels')) !!}
-            {!! Form::select('labels[]', $labels, $labelsSelected ?? null, ['class' => 'form-control', 'multiple' => true], $labelsOptions ?? []) !!}
+            {!! Form::select('labels[]', $labels, null, ['class' => 'form-control', 'multiple' => true, 'placeholder' => '']) !!}
         </div>
         {!! Form::token() !!}
 
