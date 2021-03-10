@@ -12,7 +12,7 @@ class TaskStatusTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->taskStatus = optional(TaskStatus::notNewInRandomOrder())->first();
+        $this->taskStatus = TaskStatus::notNewInRandomOrder()->first();
     }
 
     public function testIndex(): void
