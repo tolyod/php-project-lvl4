@@ -7,10 +7,7 @@ use Tests\TestCase;
 
 class TaskStatusTest extends TestCase
 {
-    /**
-     * @var \App\Models\TaskStatus|null
-     */
-    private $taskStatus;
+    private Mixed $taskStatus;
 
     public function setUp(): void
     {
