@@ -92,7 +92,7 @@ class LabelController extends Controller
         $label->name = $request->input('name');
         $label->description = $request->input('description');
         $label->saveOrFail();
-        flash()->success(__('flash.label_modify_success'));
+        flash(__('flash.label_modify_success'))->success();
 
         return redirect()->route('labels.index');
     }
