@@ -9,22 +9,18 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    /**
-     * @var Task|null $task
-     * */
-    protected $task;
+    protected Task $task;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->task = Task::inRandomOrder()->first();
+        $this->task = optional(Task::inRandomOrder())->first();
     }
 
     public function testIndex(): void
     {
         $indexUrl = route('tasks.index');
         $response = $this->get($indexUrl);
-        /* @phpstan-ignore-next-line */
         $taskName = $this->task->name;
         $response
             ->assertOk()
@@ -35,7 +31,6 @@ class TaskTest extends TestCase
     {
         $showUrl = route('tasks.show', $this->task);
         $response = $this->get($showUrl);
-        /* @phpstan-ignore-next-line */
         $taskName = $this->task->name;
         $response
             ->assertOk()
@@ -63,19 +58,17 @@ class TaskTest extends TestCase
             ->from(route('tasks.create'))
             ->post(route('tasks.store'), $data);
         $response->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('tasks', $data);
     }
 
     public function testUpdate(): void
     {
         $taskStatus = TaskStatus::inRandomOrder()->first();
         $updateUrl = route('tasks.update', $this->task);
-        /* @phpstan-ignore-next-line */
-        $taskStatusId = $taskStatus->id;
-        /* @phpstan-ignore-next-line */
-        $taskId = $this->task->id;
-
-        /* @phpstan-ignore-next-line */
-        $taskCreatorId = $this->task->creator->id;
+        $taskStatusId = optional($taskStatus)->id;
+        $taskId = optional($this->task)->id;
+        $taskCreatorId = optional($this->task)->creator->id;
 
         $data = [
             'name' => $this->faker->word,
@@ -100,8 +93,7 @@ class TaskTest extends TestCase
 
     public function testEdit(): void
     {
-        /* @phpstan-ignore-next-line */
-        $taskName = $this->task->name;
+        $taskName = optional($this->task)->name;
         $editUrl = route('tasks.edit', $this->task);
 
         $this->actingAs($this->user);
@@ -118,14 +110,12 @@ class TaskTest extends TestCase
 
         $indexUrl = route('tasks.index');
 
-        /* @phpstan-ignore-next-line */
         $this->actingAs($this->task->creator)->from($indexUrl);
 
         $response = $this->delete($deleteUrl);
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
-        /* @phpstan-ignore-next-line */
         $this->assertDeleted($this->task);
     }
 
@@ -140,7 +130,6 @@ class TaskTest extends TestCase
         $response = $this->delete($deleteUrl);
         $response->assertForbidden();
 
-        /* @phpstan-ignore-next-line */
         $taskParams = $this->task->only('id', 'name');
 
         $this->assertDatabaseHas('tasks', $taskParams);

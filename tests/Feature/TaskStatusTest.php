@@ -7,21 +7,17 @@ use Tests\TestCase;
 
 class TaskStatusTest extends TestCase
 {
-    /**
-     * @var TaskStatus|null $taskStatus
-     * */
-    private $taskStatus;
+    private TaskStatus $taskStatus;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->taskStatus = TaskStatus::notNewInRandomOrder()->first();
+        $this->taskStatus = optional(TaskStatus::notNewInRandomOrder())->first();
     }
 
     public function testIndex(): void
     {
         $response = $this->get(route('task_statuses.index'));
-        /* @phpstan-ignore-next-line */
         $taskStatusName = $this->taskStatus->name;
         $response
             ->assertOk()
@@ -86,7 +82,6 @@ class TaskStatusTest extends TestCase
 
     public function testEdit(): void
     {
-        /* @phpstan-ignore-next-line */
         $taskStatusName = $this->taskStatus->name;
         $editUrl = route('task_statuses.edit', $this->taskStatus);
 
@@ -120,7 +115,6 @@ class TaskStatusTest extends TestCase
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
-        /* @phpstan-ignore-next-line */
         $this->assertDeleted($this->taskStatus);
     }
 
@@ -131,7 +125,6 @@ class TaskStatusTest extends TestCase
         $response = $this->delete($deleteUrl);
         $response->assertRedirect(route('login'));
 
-        /* @phpstan-ignore-next-line */
         $this->assertDatabaseHas('task_statuses', $this->taskStatus->only('id', 'name'));
     }
 }

@@ -7,19 +7,15 @@ use Tests\TestCase;
 
 class LabelTest extends TestCase
 {
-    /**
-    * @var Label|null $label
-    * */
-    protected $label;
+    protected Label $label;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->label = Label::inRandomOrder()->first();
+        $this->label = optional(Label::inRandomOrder())->first();
     }
     public function testIndex(): void
     {
-        /* @phpstan-ignore-next-line */
         $labelName = $this->label->name;
         $response = $this->get(route('labels.index'));
         $response
@@ -71,7 +67,6 @@ class LabelTest extends TestCase
     public function testEdit(): void
     {
         $label = $this->label;
-        /* @phpstan-ignore-next-line */
         $labelName = $this->label->name;
         $editUrl = route('labels.edit', $label);
 
@@ -93,7 +88,6 @@ class LabelTest extends TestCase
         $response->assertRedirect($indexUrl);
         $response->assertSessionDoesntHaveErrors();
 
-        /* @phpstan-ignore-next-line */
         $this->assertDeleted($this->label);
     }
 }

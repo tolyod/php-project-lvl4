@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|TaskStatus notNewInRandomOrder()
  */
 class TaskStatus extends Model
 {

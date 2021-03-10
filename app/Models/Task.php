@@ -9,9 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Task
- *
- * @property mixed $id
- * @property string $name
  * @property string|null $description
  * @property int $status_id
  * @property int $created_by_id
@@ -22,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \App\Models\User $creator
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Label[] $labels
  * @property-read int|null $labels_count
+ * @Property-read int|null $id
+ * @Property-read string|null $name
  * @property-read \App\Models\TaskStatus $status
  * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
