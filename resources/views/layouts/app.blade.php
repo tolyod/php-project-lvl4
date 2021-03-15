@@ -34,13 +34,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
+                        <li class="nav-item{{ Route::currentRouteName() === 'tasks.index' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('tasks.index') }}">{{ __('layout.tasks') }}</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item{{ Route::currentRouteName() === 'task_statuses.index' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('task_statuses.index') }}">{{ __('layout.task_statuses') }}</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item{{ Route::currentRouteName() === 'labels.index' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('labels.index') }}">{{ __('layout.labels') }}</a>
                         </li>
                     </ul>
