@@ -12,12 +12,12 @@ try {
 
     require('bootstrap');
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.select-multiple').select2({
             width: '100%'
         });
     });
-    } catch (e) {
+} catch (e) {
 }
 
 /**
